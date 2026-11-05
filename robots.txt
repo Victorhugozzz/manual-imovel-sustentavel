@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://manual-imovel-sustentavel.pages.dev/sitemap.xml
+Sitemap: https://manual-imovel-sustentavel.fumec-arq.workers.dev/sitemap.xml
