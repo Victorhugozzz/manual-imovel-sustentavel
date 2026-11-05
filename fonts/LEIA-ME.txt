@@ -1,0 +1,6 @@
+Fontes usadas no site (cópias locais, subconjunto latino em WOFF2, obtidas do Google Fonts):
+
+- DM Sans (variável, pesos 400 a 700) — Colophon Foundry / Google — SIL Open Font License 1.1
+- Fraunces (peso 800) — Undercase Type — SIL Open Font License 1.1
+
+Licença: https://openfontlicense.org

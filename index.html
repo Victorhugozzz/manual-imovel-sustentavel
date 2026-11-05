@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manual do Imóvel Sustentável | Cartilha de Arquitetura e Urbanismo FUMEC</title>
+  <meta name="description" content="Cartilha interativa para apoiar a escolha de um imóvel sustentável: checklist, orientação solar, simulador de energia e qualidade do ar.">
+  <!-- Endereço final do site: troque aqui e em robots.txt / sitemap.xml se o domínio mudar -->
+  <link rel="canonical" href="https://manual-imovel-sustentavel.pages.dev/">
+  <meta name="theme-color" content="#f4f1e6">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <!-- Compartilhamento (WhatsApp, redes sociais) -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Manual do Imóvel Sustentável">
+  <meta property="og:title" content="Manual do Imóvel Sustentável">
+  <meta property="og:description" content="Guia prático para escolher um imóvel sustentável: 8 testes para a visita, check-lista e ferramentas de orientação solar, energia e qualidade do ar.">
+  <meta property="og:url" content="https://manual-imovel-sustentavel.pages.dev/">
+  <meta property="og:image" content="https://manual-imovel-sustentavel.pages.dev/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Capa do site: “Escolher bem a casa é cuidar do futuro”, com ilustração de uma casa com painéis solares.">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "Manual do Imóvel Sustentável",
+    "description": "Cartilha interativa para apoiar a escolha de um imóvel sustentável.",
+    "url": "https://manual-imovel-sustentavel.pages.dev/",
+    "inLanguage": "pt-BR",
+    "learningResourceType": "Cartilha",
+    "isBasedOn": "https://sustcartilha.my.canva.site/c-pia-de-sustcartilha",
+    "sourceOrganization": { "@type": "CollegeOrUniversity", "name": "Faculdade de Arquitetura e Urbanismo – FUMEC" },
+    "creator": [
+      { "@type": "Person", "name": "Augusto" }, { "@type": "Person", "name": "Helena" },
+      { "@type": "Person", "name": "Gabriela" }, { "@type": "Person", "name": "Luana" },
+      { "@type": "Person", "name": "Marcella" }, { "@type": "Person", "name": "Vinicius" }
+    ],
+    "contributor": { "@type": "Person", "name": "Prof. Dr. Mário Lúcio Pereira Júnior" }
+  }
+  </script>
+  <link rel="preload" href="fonts/dm-sans-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/fraunces-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preload" href="media/casa-sustentavel-capa.jpg" as="image" fetchpriority="high"><!-- capa do vídeo do início: é o maior elemento da primeira tela -->
+  <!-- Leaflet, SunCalc e as ferramentas são carregados por main.js quando a seção se aproxima -->
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<!-- ============ ÍCONES (sprite) ============ -->
+<svg class="icon-sprite" width="0" height="0" aria-hidden="true">
+  <defs>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></symbol>
+    <symbol id="i-wind" viewBox="0 0 24 24"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h16a3 3 0 1 1-3 3"/><path d="M3 16h7"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-9 6-14 15-14 0 9-5 15-14 15"/><path d="M5 19l9-9"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></symbol>
+    <symbol id="i-recycle" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-14.3 4.9"/><path d="M4 12A8 8 0 0 1 18.3 7.1"/><path d="M18.5 3v4.2h-4.2"/><path d="M5.5 21v-4.2h4.2"/></symbol>
+    <symbol id="i-tree" viewBox="0 0 24 24"><path d="M12 3 6 12h4l-3 5h10l-3-5h4z"/><path d="M12 17v4"/></symbol>
+    <symbol id="i-plan" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h9v9M12 3v5M16 12h5"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></symbol>
+    <symbol id="i-bin" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/><path d="M10 11v5M14 11v5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-money" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .8-3 2s1.3 1.7 3 2 3 .9 3 2.1-1.3 2-3 2c-1.5 0-2.6-.6-3-1.6M12 6v2M12 16v2"/></symbol>
+    <symbol id="i-thermo" viewBox="0 0 24 24"><path d="M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0z"/><path d="M12 9v7"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-8-4.6-8-10.2A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 8 2.8C20 15.4 12 20 12 20z"/></symbol>
+    <symbol id="i-earth" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+    <symbol id="i-gps" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V3h10v6M7 17H4v-7h16v7h-3"/><rect x="7" y="14" width="10" height="7"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.6"/><path d="M4 3.5v5.1h5.1"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.2c2.9.3 5 2.6 5 5.8"/></symbol>
+    <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 21v-9"/><path d="M12 12C12 7.5 9 5 4 5c0 4.5 3 7 8 7z"/><path d="M12 14c0-4 2.6-6.5 8-6.5 0 4.3-2.8 6.5-8 6.5z"/></symbol>
+  </defs>
+</svg>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="topo">
+  <div class="container header-inner">
+    <a href="#inicio" class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <path d="M8 34c0-15 9-25 26-26 0 17-10 26-24 26" fill="currentColor"/>
+        <path d="M9 33 24 18" stroke="var(--cream)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span>
+        <strong>Imóvel Sustentável</strong>
+        <small>Escolha consciente. Futuro melhor.</small>
+      </span>
+    </a>
+
+    <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
+      <a href="#inicio" class="active">Início</a>
+      <a href="#projeto">Projeto</a>
+      <a href="#ods">Agenda 2030</a>
+      <a href="#checklist">Checklist</a>
+      <a href="#ferramentas">Ferramentas</a>
+      <a href="#valor">Valor</a>
+      <a href="#midias">Mídias</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="#checklist" class="btn btn-dark btn-sm">Fazer checklist <svg class="ic"><use href="#i-check"/></svg></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav">
+        <svg class="ic"><use href="#i-menu"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="conteudo" tabindex="-1">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="inicio">
+  <div class="hero-art hero-video" aria-hidden="true">
+    <!-- Vídeo: Alef Morais / Pexels (licença Pexels, uso livre). Começa só em telas grandes; ver main.js -->
+    <video id="heroVideo" muted loop playsinline preload="none" disablepictureinpicture poster="media/casa-sustentavel-capa.jpg">
+      <source src="media/casa-sustentavel.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow">Para uma escolha mais consciente</p>
+      <h1 class="hero-title">
+        Escolher bem a casa
+        <span class="script">é cuidar do futuro.</span>
+      </h1>
+      <svg class="hero-underline" viewBox="0 0 260 14" aria-hidden="true"><path d="M3 9c60-8 140-8 254-2" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+      <p class="hero-lead">
+        Um guia prático e acessível para avaliar orientação solar, ventilação, água, energia
+        e entorno antes de comprar um imóvel — com ferramentas interativas para testar na hora.
+      </p>
+      <div class="hero-ctas">
+        <a href="#checklist" class="btn btn-dark">Começar checklist <svg class="ic"><use href="#i-arrow"/></svg></a>
+        <a href="#ferramentas" class="btn btn-ghost">Ferramentas digitais</a>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="hero-video-btn" id="heroVideoBtn" aria-pressed="true" hidden>
+    <svg class="ic"><use href="#i-play"/></svg><span>Reproduzir vídeo</span>
+  </button>
+
+</section>
+
+<!-- ============ SUMÁRIO (cartilha, p. 2) ============ -->
+<nav class="toc" aria-labelledby="toc-title">
+  <div class="container toc-inner">
+    <h2 class="toc-title" id="toc-title">Sumário</h2>
+    <ol class="toc-list">
+      <li><a href="#projeto"><span class="toc-n">03</span>Apresentação e Extensão Universitária</a></li>
+      <li><a href="#ods"><span class="toc-n">04</span>Sustentabilidade e a Agenda 2030 / ODS</a></li>
+      <li><a href="#dia-a-dia"><span class="toc-n">05</span>Sustentabilidade no Dia a Dia da Família</a></li>
+      <li><a href="#testes"><span class="toc-n">06</span>Checklist do Comprador: O que Observar</a></li>
+      <li><a href="#demonstracao"><span class="toc-n">07</span>Demonstração Prática: O Imóvel Não Sustentável/O Imóvel Sustentável</a></li>
+      <li><a href="#ferramentas"><span class="toc-n">08</span>Ferramentas Digitais</a></li>
+      <li><a href="#valor"><span class="toc-n">09</span>Recursos Demonstrativos e Análise de Valor</a></li>
+      <li><a href="#midias"><span class="toc-n">10</span>Mídias explicativas</a></li>
+      <li><a href="#conclusao"><span class="toc-n">11</span>Conclusão e Considerações Finais</a></li>
+    </ol>
+    <p class="toc-extra">Complementos do site: <a href="#checklist">check-lista de compra</a> para imprimir e levar na visita, e <a href="#casa-3d">a casa sustentável em 3D</a>.</p>
+  </div>
+</nav>
+
+<!-- ============ PROJETO EXTENSIONISTA ============ -->
+<section class="about section" id="projeto">
+  <div class="container about-grid">
+    <div class="about-art reveal" aria-hidden="true">
+      <p class="about-note script">Uma casa melhor<br>começa com<br>informação<br><span>♡</span></p>
+      <div class="blob">
+        <svg viewBox="0 0 400 400">
+          <defs><clipPath id="blobClip"><path d="M318 72c46 40 66 112 44 176-22 64-86 116-156 120S66 330 42 262 26 120 78 76 272 32 318 72z"/></clipPath></defs>
+          <g clip-path="url(#blobClip)">
+            <rect width="400" height="400" fill="#cfe0bf"/>
+            <circle cx="300" cy="90" r="46" fill="#f6dd8a"/>
+            <path d="M0 290 C 120 250 260 260 400 240 L400 400 L0 400Z" fill="#5d8c55"/>
+            <!-- mãos com muda -->
+            <path d="M70 340 C 110 290 160 285 200 300 C 240 285 290 290 330 340 L330 400 L70 400Z" fill="#c99a76"/>
+            <path d="M120 318 C 150 300 250 300 280 318 C 250 335 150 335 120 318Z" fill="#5b3f2c"/>
+            <path d="M200 312 V 230" stroke="#2f6b3a" stroke-width="6" stroke-linecap="round"/>
+            <path d="M200 262 C 200 222 170 205 132 206 C 134 242 160 262 200 262Z" fill="#4f9a4c"/>
+            <path d="M200 240 C 200 205 226 188 262 188 C 260 222 238 240 200 240Z" fill="#6cb35e"/>
+            <path d="M200 230 C 196 200 205 178 222 166" stroke="#2f6b3a" stroke-width="4" fill="none"/>
+          </g>
+        </svg>
+      </div>
+      <span class="blob-ring"></span>
+    </div>
+
+    <div class="about-copy reveal">
+      <p class="eyebrow">O projeto extensionista</p>
+      <h2 class="section-title">Do conhecimento acadêmico<br>para a vida real.</h2>
+      <p>
+        Esta cartilha é fruto de um trabalho de extensão universitária dos alunos do curso de
+        <strong>Arquitetura e Urbanismo da Faculdade FUMEC</strong>. A extensão tem como objetivo principal
+        levar o conhecimento científico e acadêmico gerado na universidade para a comunidade,
+        aplicando-o em soluções práticas para o cotidiano.
+      </p>
+      <h3 class="sub-q">Por que falar sobre a compra de imóveis sustentáveis?</h3>
+      <p>
+        A escolha de uma moradia é uma das decisões mais importantes na vida de uma família.
+        No entanto, muitas pessoas desconhecem como as características arquitetônicas e construtivas
+        de um imóvel afetam diretamente o meio ambiente, a saúde dos moradores e o orçamento doméstico
+        a longo prazo. Esta cartilha surge como um <strong>guia prático e acessível</strong> para orientar
+        essa decisão de forma consciente.
+      </p>
+      <a href="#ods" class="btn btn-dark">Nossa base <svg class="ic"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+  <svg class="side-leaf" viewBox="0 0 120 200" aria-hidden="true"><path d="M60 196V30M60 60c-30-6-44-26-44-50 26 2 44 20 44 50zM60 100c30-6 44-26 44-50-26 2-44 20-44 50zM60 140c-30-6-44-26-44-50 26 2 44 20 44 50z" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+</section>
+
+<!-- ============ SUSTENTABILIDADE & ODS ============ -->
+<section class="ods section section-tint" id="ods">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Sustentabilidade e a Agenda 2030</p>
+      <h2 class="section-title">O que é sustentabilidade<br>na arquitetura?</h2>
+    </div>
+
+    <div class="ods-grid">
+      <figure class="venn reveal" aria-label="Diagrama: social, ambiental e econômico se encontram no sustentável">
+        <svg viewBox="0 0 360 330">
+          <circle cx="180" cy="115" r="95" fill="#9cc47e" opacity=".9"/>
+          <circle cx="120" cy="210" r="95" fill="#4f8a47" opacity=".88"/>
+          <circle cx="240" cy="210" r="95" fill="#6aa357" opacity=".88"/>
+          <path d="M180 190 m-38 0 a38 38 0 1 0 76 0 a38 38 0 1 0 -76 0" fill="#1f4d2b"/>
+          <g font-family="DM Sans, sans-serif" font-weight="700" fill="#fff" text-anchor="middle">
+            <text x="180" y="70" font-size="15">SOCIAL</text>
+            <text x="85" y="250" font-size="15">AMBIENTAL</text>
+            <text x="275" y="250" font-size="15">ECONÔMICO</text>
+            <text x="180" y="194" font-size="10.5">SUSTENTÁVEL</text>
+            <text x="125" y="155" font-size="10" fill="#1f4d2b">SUPORTÁVEL</text>
+            <text x="237" y="155" font-size="10" fill="#1f4d2b">EQUITATIVO</text>
+            <text x="180" y="262" font-size="10" fill="#e8f2dc">VIÁVEL</text>
+          </g>
+        </svg>
+      </figure>
+
+      <div class="ods-copy reveal">
+        <p class="lead">
+          Trata-se de <strong>planejar, construir e habitar espaços</strong> minimizando os impactos ambientais
+          negativos, otimizando o uso de recursos naturais (como água e luz solar) e promovendo a qualidade
+          de vida e o bem-estar social.
+        </p>
+        <h3 class="sub-q">Conexão com os Objetivos de Desenvolvimento Sustentável (ODS da ONU)</h3>
+        <p>Nosso projeto atua em consonância com a Agenda 2030 das Nações Unidas, impactando diretamente:</p>
+
+        <div class="ods-cards">
+          <article class="ods-card ods-11">
+            <span class="ods-num">11</span>
+            <div>
+              <h4>Cidades e Comunidades Sustentáveis</h4>
+              <p>Incentivar escolhas habitacionais que promovam a resiliência urbana, a redução da pegada de carbono e o uso consciente do solo.</p>
+            </div>
+          </article>
+          <article class="ods-card ods-12">
+            <span class="ods-num">12</span>
+            <div>
+              <h4>Consumo e Produção Responsáveis</h4>
+              <p>Estimular o uso de edificações que promovam a eficiência energética, a redução do desperdício de água e a gestão adequada de resíduos.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DIA A DIA ============ -->
+<section class="daily section" id="dia-a-dia">
+  <div class="container daily-grid">
+    <div class="daily-intro reveal">
+      <p class="eyebrow">Sustentabilidade no dia a dia da família</p>
+      <h2 class="section-title script-title">Pequenas escolhas.<br>Grande diferença.</h2>
+      <p>
+        Sustentabilidade não é apenas sobre “proteger o planeta”, é também sobre a
+        <strong>qualidade de vida diária da sua família</strong>. Como a arquitetura sustentável afeta sua rotina?
+      </p>
+      <a href="#testes" class="btn btn-dark">Ver os 8 testes <svg class="ic"><use href="#i-arrow"/></svg></a>
+    </div>
+
+    <article class="feature-card reveal">
+      <div class="feature-top f-money"><svg class="ic"><use href="#i-money"/></svg></div>
+      <span class="feature-badge"><svg class="ic"><use href="#i-money"/></svg></span>
+      <h3>Economia financeira</h3>
+      <p>Imóveis eficientes reduzem drasticamente o valor das contas mensais de energia elétrica e água.</p>
+      <a href="#energia" class="link">Simular consumo <svg class="ic"><use href="#i-arrow"/></svg></a>
+    </article>
+    <article class="feature-card reveal">
+      <div class="feature-top f-thermo"><svg class="ic"><use href="#i-thermo"/></svg></div>
+      <span class="feature-badge"><svg class="ic"><use href="#i-thermo"/></svg></span>
+      <h3>Conforto térmico e acústico</h3>
+      <p>Ambientes bem orientados e isolados mantêm temperaturas agradáveis durante o ano todo e reduzem ruídos externos incômodos.</p>
+      <a href="#sol" class="link">Ver orientação solar <svg class="ic"><use href="#i-arrow"/></svg></a>
+    </article>
+    <article class="feature-card reveal">
+      <div class="feature-top f-heart"><svg class="ic"><use href="#i-heart"/></svg></div>
+      <span class="feature-badge"><svg class="ic"><use href="#i-heart"/></svg></span>
+      <h3>Saúde respiratória e mental</h3>
+      <p>Ambientes bem ventilados e com boa entrada de luz natural evitam o mofo e melhoram o humor e a produtividade dos moradores.</p>
+      <a href="#ar" class="link">Consultar qualidade do ar <svg class="ic"><use href="#i-arrow"/></svg></a>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 8 TESTES ============ -->
+<section class="tests section section-tint" id="testes">
+  <div class="container">
+    <div class="section-head center reveal">
+      <p class="eyebrow">Checklist do comprador: o que observar</p>
+      <h2 class="section-title">8 testes antes de comprar</h2>
+      <p class="muted">Na visita: observe • teste • compare • marque cada item.</p>
+    </div>
+
+    <div class="tests-grid" data-check-group="testes">
+      <label class="test-card reveal"><input type="checkbox" data-key="t-sol"><span class="test-ic"><svg class="ic"><use href="#i-sun"/></svg></span><span class="test-body"><strong>Sol &amp; Sombra</strong>Confira a orientação das janelas com uma bússola. Há luz natural sem calor excessivo?</span><span class="tick"><svg class="ic"><use href="#i-check"/></svg></span></label>
+      <label class="test-card reveal"><input type="checkbox" data-key="t-vento"><span class="test-ic"><svg class="ic"><use href="#i-wind"/></svg></span><span class="test-body"><strong>Vento &amp; Ar</strong>Abra janelas em lados diferentes: o ar circula? Há abafamento ou cheiro de mofo?</span><span class="tick"><svg class="ic"><use href="#i-check"/></svg></span></label>
+      <label class="test-card reveal"><input type="checkbox" data-key="t-luz"><span class="test-ic"><svg class="ic"><use href="#i-bolt"/></svg></span><span class="test-body"><strong>Luz &amp; Energia</strong>De dia, é preciso acender luzes? Veja o sombreamento e o uso de lâmpadas LED.</span><span class="tick"><svg class="ic"><use href="#i-check"/></svg></span></label>
+      <label class="test-card reveal"><input type="checkbox" data-key="t-agua"><span class="test-ic"><svg class="ic"><use href="#i-drop"/></svg></span><span class="test-body"><strong>Uso da Água</strong>Abra torneiras e teste a descarga. Há vazamentos, arejadores ou duplo acionamento?</span><span class="tick"><svg class="ic"><use href="#i-check"/></svg></span></label>
+      <label class="test-card reveal"><input type="checkbox" data-key="t-bairro"><span class="test-ic"><svg class="ic"><use href="#i-tree"/></svg></span><span class="test-body"><strong>Bairro &amp; Verde</strong>Caminhe pela rua: há transporte, serviços, árvores e calçadas? Pergunte sobre enchentes.</span><span class="tick"><svg class="ic"><use href="#i-check"/></svg></span></label>
+      <label class="test-card reveal"><input type="checkbox" data-key="t-planta"><span class="test-ic"><svg class="ic"><use href="#i-plan"/></svg></span><span class="test-body"><strong>Planta &amp; Uso</strong>Os cômodos atendem à rotina? Meça móveis e passagens. A planta permite adaptações?</span><span class="tick"><svg class="ic"><use href="#i-check"/></svg></span></label>
+      <label class="test-card reveal"><input type="checkbox" data-key="t-residuos"><span class="test-ic"><svg class="ic"><use href="#i-recycle"/></svg></span><span class="test-body"><strong>Resíduos</strong>Há coleta seletiva acessível e espaço para separar recicláveis e resíduos orgânicos?</span><span class="tick"><svg class="ic"><use href="#i-check"/></svg></span></label>
+      <label class="test-card reveal"><input type="checkbox" data-key="t-papeis"><span class="test-ic"><svg class="ic"><use href="#i-doc"/></svg></span><span class="test-body"><strong>Estado &amp; Papéis</strong>Procure fissuras e infiltrações. Peça avaliação técnica e confira matrícula, débitos e regularidade.</span><span class="tick"><svg class="ic"><use href="#i-check"/></svg></span></label>
+    </div>
+    <div class="progress-line reveal" data-progress-for="testes">
+      <div class="bar"><span></span></div><p><b>0</b> de 8 testes concluídos</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHECKLIST COMPLETO ============ -->
+<section class="checklist section" id="checklist">
+  <div class="container checklist-grid">
+    <aside class="checklist-side reveal">
+      <p class="eyebrow">Check-lista de compra</p>
+      <h2 class="section-title">Avalie o imóvel<br>item por item.</h2>
+      <p class="muted">Material complementar do grupo, além dos 8 testes da cartilha. Seu progresso fica salvo neste navegador. Imprima para levar na visita.</p>
+
+      <div class="score-card" data-progress-for="checklist">
+        <svg viewBox="0 0 120 120" class="ring" aria-hidden="true">
+          <circle cx="60" cy="60" r="50" class="ring-bg"/>
+          <circle cx="60" cy="60" r="50" class="ring-fg"/>
+        </svg>
+        <div class="score-txt"><strong>0%</strong><span>do checklist</span></div>
+        <p class="score-msg">Comece pela localização do imóvel.</p>
+      </div>
+
+      <div class="side-actions">
+        <button class="btn btn-ghost btn-sm" id="btnPrint"><svg class="ic"><use href="#i-print"/></svg> Imprimir</button>
+        <button class="btn btn-ghost btn-sm" id="btnReset"><svg class="ic"><use href="#i-reset"/></svg> Limpar</button>
+      </div>
+    </aside>
+
+    <div class="accordion" data-check-group="checklist">
+      <details class="acc reveal" id="check-localizacao" open>
+        <summary><span class="acc-n">1</span><span class="acc-t">Localização e entorno</span><span class="acc-c">0/6</span></summary>
+        <ul>
+          <li><label><input type="checkbox" data-key="c1-1"><span>Próximo de mercados, escolas, hospitais e farmácias</span></label></li>
+          <li><label><input type="checkbox" data-key="c1-2"><span>Acesso fácil ao transporte público</span></label></li>
+          <li><label><input type="checkbox" data-key="c1-3"><span>Ruas seguras, iluminadas e com calçadas acessíveis</span></label></li>
+          <li><label><input type="checkbox" data-key="c1-4"><span>Presença de árvores, praças e áreas verdes</span></label></li>
+          <li><label><input type="checkbox" data-key="c1-5"><span>Verificar ruídos, trânsito, alagamentos e riscos na região</span></label></li>
+          <li><label><input type="checkbox" data-key="c1-6"><span>Distância do trabalho, estudo e outros locais frequentados</span></label></li>
+        </ul>
+      </details>
+
+      <details class="acc reveal" id="check-solar">
+        <summary><span class="acc-n">2</span><span class="acc-t">Posição solar e orientação da casa</span><span class="acc-c">0/5</span></summary>
+        <ul>
+          <li><label><input type="checkbox" data-key="c2-1"><span>Identificar para qual direção a casa está voltada</span></label></li>
+          <li><label><input type="checkbox" data-key="c2-2"><span>Verificar a incidência do sol da manhã e da tarde</span></label></li>
+          <li><label><input type="checkbox" data-key="c2-3"><span>Observar se os ambientes ficam muito quentes durante o dia</span></label></li>
+          <li><label><input type="checkbox" data-key="c2-4"><span>Verificar a presença de sombras de árvores ou edifícios vizinhos</span></label></li>
+          <li><label><input type="checkbox" data-key="c2-5"><span>Avaliar a possibilidade de usar beirais, toldos ou brises para controlar o sol</span></label></li>
+        </ul>
+        <a class="acc-tool" href="#sol"><svg class="ic"><use href="#i-sun"/></svg> Use a ferramenta de trajetória solar</a>
+      </details>
+
+      <details class="acc reveal" id="check-janelas">
+        <summary><span class="acc-n">3</span><span class="acc-t">Janelas, iluminação e ventilação</span><span class="acc-c">0/7</span></summary>
+        <ul>
+          <li><label><input type="checkbox" data-key="c3-1"><span>Janelas posicionadas para aproveitar a luz natural</span></label></li>
+          <li><label><input type="checkbox" data-key="c3-2"><span>Ventilação cruzada, com aberturas em lados diferentes quando possível</span></label></li>
+          <li><label><input type="checkbox" data-key="c3-3"><span>Janelas em posições adequadas para a circulação do ar</span></label></li>
+          <li><label><input type="checkbox" data-key="c3-4"><span>Privacidade em relação às casas vizinhas</span></label></li>
+          <li><label><input type="checkbox" data-key="c3-5"><span>Proteção contra chuva, ruído e excesso de sol</span></label></li>
+          <li><label><input type="checkbox" data-key="c3-6"><span>Boa iluminação natural sem ofuscamento excessivo</span></label></li>
+          <li><label><input type="checkbox" data-key="c3-7"><span>Possibilidade de abrir as janelas com segurança</span></label></li>
+        </ul>
+      </details>
+
+      <details class="acc reveal" id="check-ambientes">
+        <summary><span class="acc-n">4</span><span class="acc-t">Distribuição e conforto dos ambientes</span><span class="acc-c">0/6</span></summary>
+        <ul>
+          <li><label><input type="checkbox" data-key="c4-1"><span>Cômodos adequados às necessidades dos moradores</span></label></li>
+          <li><label><input type="checkbox" data-key="c4-2"><span>Quartos com ventilação e iluminação natural</span></label></li>
+          <li><label><input type="checkbox" data-key="c4-3"><span>Cozinha com ventilação adequada</span></label></li>
+          <li><label><input type="checkbox" data-key="c4-4"><span>Banheiros com janela ou sistema eficiente de exaustão</span></label></li>
+          <li><label><input type="checkbox" data-key="c4-5"><span>Circulação confortável entre os ambientes</span></label></li>
+          <li><label><input type="checkbox" data-key="c4-6"><span>Possibilidade de adaptar os espaços no futuro</span></label></li>
+        </ul>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEMONSTRAÇÃO PRÁTICA ============ -->
+<section class="compare section section-tint" id="demonstracao">
+  <div class="container">
+    <div class="section-head center reveal">
+      <p class="eyebrow">Demonstração prática</p>
+      <h2 class="section-title">O imóvel não sustentável<br>× o imóvel sustentável</h2>
+    </div>
+
+    <div class="compare-grid">
+      <article class="compare-col bad reveal">
+        <header>
+          <span class="tag">Evitar</span>
+          <h3>O imóvel não sustentável</h3>
+          <p><strong>O que evitar na hora da escolha?</strong> Um imóvel sem planejamento sustentável gera custos altos e desconforto permanente.</p>
+          <p class="small-title">Características comuns de um imóvel ineficiente:</p>
+        </header>
+        <ul class="compare-list">
+          <li><b>Janelas mal posicionadas:</b> ausência de luz natural durante o dia, exigindo lâmpadas acesas constantemente.</li>
+          <li><b>Falta de ventilação natural:</b> ambientes abafados que dependem de ar-condicionado ou ventiladores ligados o dia todo.</li>
+          <li><b>Materiais de baixa qualidade térmica:</b> telhados e paredes que absorvem excesso de calor no verão e não retêm calor no inverno.</li>
+          <li><b>Inexistência de gestão de água:</b> ausência de reaproveitamento de água e torneiras/descargas sem controle de vazão.</li>
+          <li><b>Dependência do automóvel:</b> localização isolada que obriga a família a usar carro para qualquer atividade básica.</li>
+        </ul>
+      </article>
+
+      <div class="compare-vs" aria-hidden="true">vs</div>
+
+      <article class="compare-col good reveal">
+        <header>
+          <span class="tag">Buscar</span>
+          <h3>O imóvel sustentável</h3>
+          <p><strong>As melhores práticas arquitetônicas.</strong> O imóvel ideal busca o equilíbrio entre tecnologia, materiais e soluções passivas.</p>
+          <p class="small-title">Soluções que agregam valor e sustentabilidade:</p>
+        </header>
+        <ul class="compare-list">
+          <li><b>Painéis fotovoltaicos:</b> geração de energia limpa e renovável no próprio imóvel.</li>
+          <li><b>Captação e reuso de água:</b> captação de água da chuva para regar plantas, lavar áreas externas e usar em descargas.</li>
+          <li><b>Paisagismo bioclimático:</b> uso de árvores e plantas para criar sombreamento natural e amenizar a temperatura do entorno.</li>
+          <li><b>Materiais certificados e locais:</b> estruturas e acabamentos produzidos com menor emissão de carbono e alta durabilidade.</li>
+          <li><b>Aproveitamento passivo:</b> aberturas estratégicas que captam o vento predominante da região e a luz solar natural.</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CASA EM 3D ============ -->
+<section class="house3d section" id="casa-3d">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Modelo em 3D</p>
+      <h2 class="section-title">A casa sustentável<br>em três dimensões.</h2>
+      <p class="muted max">Modelo esquemático feito a partir do corte de uma casa sustentável. Gire com o mouse ou o dedo, aproxime e mude a estação e a hora para ver como o sol entra e onde ficam as soluções da cartilha.</p>
+    </div>
+
+    <div class="h3d-layout">
+      <div class="h3d-stage">
+        <div class="h3d-canvas" id="h3dCanvas" role="img" aria-label="Modelo 3D em corte de uma casa de dois pavimentos: telhados inclinados com lanternim entre eles, placas solares, marquises, escada interna e árvores dos dois lados."></div>
+        <div class="h3d-markers" id="h3dMarkers" aria-hidden="true"></div>
+        <p class="h3d-status" id="h3dStatus" role="status">Carregando o modelo 3D…</p>
+      </div>
+
+      <div class="h3d-side">
+        <div class="h3d-controls">
+          <div class="h3d-row" role="group" aria-label="Vistas">
+            <button type="button" class="chip" data-view="perspectiva">Perspectiva</button>
+            <button type="button" class="chip" data-view="corte">Vista do corte</button>
+            <button type="button" class="chip" data-view="cima">De cima</button>
+            <button type="button" class="chip" id="h3dRotate" aria-pressed="false">Girar</button>
+          </div>
+          <div class="h3d-row" role="group" aria-label="Estação do ano">
+            <button type="button" class="chip" data-season="verao" aria-pressed="false">Verão</button>
+            <button type="button" class="chip" data-season="equinocio" aria-pressed="false">Equinócio</button>
+            <button type="button" class="chip" data-season="inverno" aria-pressed="true">Inverno</button>
+          </div>
+          <label class="h3d-hour">Hora do dia: <output id="h3dHourOut">10:00</output>
+            <input type="range" id="h3dHour" min="5.5" max="18.5" step="0.25" value="10">
+          </label>
+          <p class="tiny">Sol calculado para Belo Horizonte, com o fundo da casa voltado para o norte (seta vermelha no chão).</p>
+        </div>
+
+        <ol class="h3d-list" id="h3dList">
+          <li><button type="button" data-spot="paineis" aria-pressed="false"><b>Painéis fotovoltaicos</b><span>Geração de energia limpa e renovável no próprio imóvel.</span></button></li>
+          <li><button type="button" data-spot="lanternim" aria-pressed="false"><b>Aproveitamento passivo</b><span>Aberturas estratégicas que captam o vento predominante da região e a luz solar natural.</span></button></li>
+          <li><button type="button" data-spot="chuva" aria-pressed="false"><b>Captação e reuso de água</b><span>Captação de água da chuva para regar plantas, lavar áreas externas e usar em descargas.</span></button></li>
+          <li><button type="button" data-spot="arvores" aria-pressed="false"><b>Paisagismo bioclimático</b><span>Uso de árvores e plantas para criar sombreamento natural e amenizar a temperatura do entorno.</span></button></li>
+          <li><button type="button" data-spot="beirais" aria-pressed="false"><b>Beirais e marquises</b><span>Avaliar a possibilidade de usar beirais, toldos ou brises para controlar o sol.</span></button></li>
+          <li><button type="button" data-spot="ventilacao" aria-pressed="false"><b>Ventilação cruzada</b><span>Ventilação cruzada, com aberturas em lados diferentes quando possível.</span></button></li>
+        </ol>
+
+        <details class="h3d-corte">
+          <summary>Ver o corte que deu origem ao modelo</summary>
+          <img src="img/corte-casa.webp" width="735" height="652" loading="lazy" alt="Corte esquemático em preto e branco: casa de dois pavimentos com dois telhados inclinados e lanternim, placas solares, escada, marquises, árvores, chuva à esquerda e sol à direita.">
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FERRAMENTAS ============ -->
+<section class="tools section" id="ferramentas">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Ferramentas digitais</p>
+      <h2 class="section-title">Analise o imóvel<br>sem sair de casa.</h2>
+      <p class="muted max">
+        Hoje em dia, você não precisa ir até o imóvel várias vezes ao dia para entender o clima, a iluminação
+        ou o entorno da região. Existem ferramentas gratuitas na internet que ajudam a fazer essa análise técnica de forma simples:
+      </p>
+      <ul class="tool-refs">
+        <li><b>Google Earth e Google Maps</b> (visão de entorno e arborização): <a href="https://earth.google.com/web/" target="_blank" rel="noopener">Google Earth</a>, <a href="https://www.google.com/maps" target="_blank" rel="noopener">Google Maps</a></li>
+        <li><b>SunCalc / PeakFinder</b> (análise de orientação solar): <a href="https://www.suncalc.org" target="_blank" rel="noopener">SunCalc</a>, <a href="https://www.peakfinder.com" target="_blank" rel="noopener">PeakFinder</a></li>
+        <li><b>Simuladores de consumo e eficiência energética</b> (ex.: Procel / Eletrobras): <a href="https://www.procel.gov.br" target="_blank" rel="noopener">Procel</a>, <a href="https://axia.com.br/" target="_blank" rel="noopener">Axia (Eletrobras)</a></li>
+        <li><b>Plataformas de qualidade do ar e ruído</b> (ex.: IQAir, Windy): <a href="https://www.iqair.com/pt/" target="_blank" rel="noopener">IQAir</a>, <a href="https://www.windy.com/" target="_blank" rel="noopener">Windy</a></li>
+      </ul>
+      <p class="muted max">Abaixo, versões simplificadas feitas para este site. Escolha a cidade ou clique no mapa: as três ferramentas usam o mesmo local.</p>
+    </div>
+
+    <!-- Seletor de local compartilhado -->
+    <div class="locbar reveal" id="locbar">
+      <form class="loc-search" id="locForm" autocomplete="off">
+        <svg class="ic"><use href="#i-search"/></svg>
+        <input type="search" id="locInput" placeholder="Buscar cidade (ex.: Belo Horizonte)" aria-label="Buscar cidade" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="locResults">
+        <ul class="loc-results" id="locResults" role="listbox" aria-label="Cidades encontradas" hidden></ul>
+      </form>
+      <button class="btn btn-ghost btn-sm" id="btnGeo" type="button"><svg class="ic"><use href="#i-gps"/></svg> Minha localização</button>
+      <p class="loc-current"><svg class="ic"><use href="#i-pin"/></svg> <span id="locLabel">Belo Horizonte, MG</span> <code id="locCoords">-19.9220, -43.9360</code></p>
+      <p class="loc-msg" id="locMsg" role="status" hidden></p>
+      <p class="sr-only" id="locLive" aria-live="polite"></p>
+    </div>
+
+    <div class="tool-tabs reveal" role="tablist" aria-label="Ferramentas">
+      <button role="tab" aria-selected="true" aria-controls="sol" id="tab-sol" class="tab active"><svg class="ic"><use href="#i-sun"/></svg> Sol &amp; Terra</button>
+      <button role="tab" aria-selected="false" aria-controls="energia" id="tab-energia" class="tab" tabindex="-1"><svg class="ic"><use href="#i-bolt"/></svg> Simulador de energia</button>
+      <button role="tab" aria-selected="false" aria-controls="ar" id="tab-ar" class="tab" tabindex="-1"><svg class="ic"><use href="#i-wind"/></svg> Qualidade do ar</button>
+    </div>
+
+    <!-- ===== SOL & TERRA ===== -->
+    <div class="tool-panel active" id="sol" role="tabpanel" aria-labelledby="tab-sol" tabindex="0">
+      <div class="sun-layout">
+        <div class="map-card">
+          <div id="map" class="map" role="region" aria-label="Mapa de satélite do local"></div>
+          <p class="map-offline" id="mapOffline" role="status" hidden>Sem conexão: as imagens do mapa não carregaram. Os cálculos de sol continuam funcionando.</p>
+          <div class="map-actions">
+            <a class="btn btn-light btn-sm" id="lnkSuncalc" target="_blank" rel="noopener">Abrir no SunCalc <svg class="ic"><use href="#i-ext"/></svg></a>
+            <a class="btn btn-light btn-sm" id="lnkEarth" target="_blank" rel="noopener">Ver no Google Earth <svg class="ic"><use href="#i-ext"/></svg></a>
+          </div>
+        </div>
+
+        <div class="sun-card">
+          <div class="sun-controls">
+            <label>Data
+              <input type="date" id="sunDate">
+            </label>
+            <div class="quick-dates">
+              <button type="button" data-qd="today">Hoje</button>
+              <button type="button" data-qd="winter">Inverno</button>
+              <button type="button" data-qd="summer">Verão</button>
+              <button type="button" data-qd="equinox">Equinócio</button>
+            </div>
+            <label class="time-label">Hora: <output id="sunTimeOut">12:00</output> <small id="sunTz"></small>
+              <input type="range" id="sunTime" min="0" max="1439" step="5" value="720" aria-valuetext="12:00">
+            </label>
+          </div>
+
+          <div class="sun-viz">
+            <svg id="sunCompass" viewBox="0 0 320 340" role="img" aria-label="Diagrama da trajetória do sol"></svg>
+            <div class="sun-readout">
+              <div><span>Nascer</span><b id="rSunrise">--:--</b></div>
+              <div><span>Meio-dia solar</span><b id="rNoon">--:--</b></div>
+              <div><span>Pôr do sol</span><b id="rSunset">--:--</b></div>
+              <div><span>Duração do dia</span><b id="rDay">--</b></div>
+              <div><span>Altura do sol</span><b id="rAlt">--</b></div>
+              <div><span>Direção (azimute)</span><b id="rAz">--</b></div>
+            </div>
+          </div>
+
+          <div class="facade">
+            <p class="facade-q">Para onde está voltada a fachada principal (ou a janela da sala/quarto)?</p>
+            <div class="facade-btns" id="facadeBtns" role="radiogroup" aria-label="Orientação da fachada"></div>
+            <div class="facade-result" id="facadeResult" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+      <p class="tool-foot">Cálculos astronômicos feitos no próprio navegador (algoritmo SunCalc). Imagens de satélite: Esri World Imagery. Para a análise completa de sombras e horizontes, use o <a href="https://www.suncalc.org" target="_blank" rel="noopener">SunCalc.org</a> e o <a href="https://earth.google.com/web/" target="_blank" rel="noopener">Google Earth</a>.</p>
+    </div>
+
+    <!-- ===== ENERGIA ===== -->
+    <div class="tool-panel" id="energia" role="tabpanel" aria-labelledby="tab-energia" tabindex="0" hidden>
+      <div class="energy-layout">
+        <div class="energy-table-card">
+          <div class="card-head">
+            <h3>Aparelhos da casa</h3>
+            <div class="preset-btns">
+              <button type="button" class="chip" data-preset="tradicional">Casa tradicional</button>
+              <button type="button" class="chip" data-preset="eficiente">Casa eficiente</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="energy-table" id="energyTable">
+              <thead><tr><th>Aparelho</th><th>Potência (W)</th><th>Qtd.</th><th>Horas/dia</th><th>Dias/mês</th><th>kWh/mês</th><th><span class="sr-only">Remover</span></th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm" id="btnAddRow"><svg class="ic"><use href="#i-plus"/></svg> Adicionar aparelho</button>
+
+          <div class="tariff">
+            <label>Tarifa (R$/kWh, com impostos)
+              <input type="number" id="tarifa" min="0" step="0.01" value="1.00">
+            </label>
+            <label>Bandeira tarifária
+              <select id="bandeira">
+                <option value="0">Verde</option>
+                <option value="0.01885">Amarela (+R$ 1,885/100 kWh)</option>
+                <option value="0.04463">Vermelha P1 (+R$ 4,463/100 kWh)</option>
+                <option value="0.07877">Vermelha P2 (+R$ 7,877/100 kWh)</option>
+              </select>
+            </label>
+          </div>
+          <p class="tiny">Acréscimos das bandeiras: valores definidos pela ANEEL, vigentes em 2026. A tarifa varia por distribuidora; confira a sua na conta de luz.</p>
+        </div>
+
+        <div class="energy-result">
+          <div class="big-number">
+            <span>Consumo estimado</span>
+            <strong id="eKwh">0 kWh</strong>
+            <span>por mês</span>
+          </div>
+          <div class="big-number accent">
+            <span>Conta de luz estimada</span>
+            <strong id="eCost">R$ 0</strong>
+            <span id="eYear">R$ 0 por ano</span>
+          </div>
+          <div class="bars" id="eBars" role="group" aria-label="Aparelhos que mais consomem"></div>
+          <p class="sr-only" id="eLive" aria-live="polite"></p>
+
+          <div class="solar-box">
+            <h4><svg class="ic"><use href="#i-sun"/></svg> E se o imóvel tivesse energia solar?</h4>
+            <div class="solar-inputs">
+              <label>Irradiação (HSP, kWh/m²·dia)<input type="number" id="hsp" step="0.1" min="2" max="8" value="5.3"></label>
+              <label>Custo do sistema (R$/kWp)<input type="number" id="custoKwp" step="100" min="1000" value="4200"></label>
+            </div>
+            <ul class="solar-out">
+              <li><span>Potência necessária</span><b id="sKwp">--</b></li>
+              <li><span>Nº aprox. de painéis (550 W)</span><b id="sPaineis">--</b></li>
+              <li><span>Investimento estimado</span><b id="sInv">--</b></li>
+              <li><span>Economia mensal</span><b id="sEco">--</b></li>
+              <li><span>Retorno simples do investimento</span><b id="sPay">--</b></li>
+            </ul>
+            <p class="tiny">Considera 80% de desempenho do sistema e custo de disponibilidade mínimo de 50 kWh (bifásico). O retorno é simples: não inclui reajustes da tarifa, a perda de rendimento dos painéis nem a cobrança gradual do “Fio B” sobre a energia compensada, prevista na Lei 14.300/2022, que deixa o prazo real mais longo. Estimativa educativa: consulte a distribuidora e um projetista.</p>
+          </div>
+          <a class="btn btn-dark btn-sm" href="https://axia.com.br/" target="_blank" rel="noopener">Dados do setor elétrico na Axia (Eletrobras) <svg class="ic"><use href="#i-ext"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== QUALIDADE DO AR ===== -->
+    <div class="tool-panel" id="ar" role="tabpanel" aria-labelledby="tab-ar" tabindex="0" hidden>
+      <div class="air-layout">
+        <div class="air-card">
+          <div class="aqi-gauge">
+            <svg viewBox="0 0 200 120" aria-hidden="true">
+              <path d="M20 100 A80 80 0 0 1 180 100" class="g-bg"/>
+              <path d="M20 100 A80 80 0 0 1 180 100" class="g-fg" id="aqiArc"/>
+              <line x1="100" y1="100" x2="100" y2="34" class="g-needle" id="aqiNeedle"/>
+              <circle cx="100" cy="100" r="6" class="g-hub"/>
+            </svg>
+            <div class="aqi-num"><strong id="aqiVal">--</strong><span>IQA (EUA)</span></div>
+          </div>
+          <p class="aqi-label" id="aqiLabel" aria-live="polite">Carregando dados…</p>
+          <p class="aqi-advice" id="aqiAdvice"></p>
+          <dl class="pollutants" id="pollutants"></dl>
+          <div class="spark-wrap">
+            <p class="tiny">Previsão do IQA para as próximas 72 h</p>
+            <svg id="aqiSpark" viewBox="0 0 300 70" preserveAspectRatio="none" role="img" aria-label="Previsão do índice de qualidade do ar"></svg>
+          </div>
+          <p class="tiny">Fonte: Open-Meteo / CAMS (Copernicus). Atualizado: <span id="aqiTime">--</span></p>
+        </div>
+
+        <div class="windy-card">
+          <iframe id="windyFrame" title="Mapa de vento e poluição – Windy" loading="lazy" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+          <div class="windy-actions">
+            <a class="btn btn-light btn-sm" id="lnkWindy" target="_blank" rel="noopener">Abrir camada PM2.5 no Windy <svg class="ic"><use href="#i-ext"/></svg></a>
+            <span class="tiny">Vento predominante ajuda a planejar a <b>ventilação cruzada</b>.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RECURSOS DEMONSTRATIVOS / VALOR ============ -->
+<section class="value section" id="valor">
+  <div class="container">
+    <div class="campaign reveal">
+      <div class="campaign-copy">
+        <p class="eyebrow light">Recursos demonstrativos</p>
+        <h2 class="section-title light">E análise de valor</h2>
+        <p>Embora alguns imóveis sustentáveis possam ter um valor de compra inicial ligeiramente diferente, a relação custo-benefício ao longo do tempo é extremamente vantajosa.</p>
+      </div>
+      <p class="campaign-note script" aria-hidden="true">Gasta menos,<br>vale mais<br>~ ~ ~</p>
+    </div>
+
+    <div class="value-grid">
+      <div class="table-card reveal">
+        <table class="value-table">
+          <thead>
+            <tr><th>Métrica</th><th>Imóvel tradicional<br><small>(não sustentável)</small></th><th>Imóvel sustentável</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Preço de compra inicial</td><td>R$ 500.000,00</td><td>R$ 530.000,00</td></tr>
+            <tr><td>Conta de luz mensal (média)</td><td>R$ 450,00</td><td class="win">R$ 80,00</td></tr>
+            <tr><td>Conta de água mensal (média)</td><td>R$ 180,00</td><td class="win">R$ 70,00</td></tr>
+            <tr class="strong"><td>Gasto operacional mensal total</td><td>R$ 630,00</td><td class="win">R$ 150,00</td></tr>
+            <tr><td>Economia acumulada em 10 anos</td><td>—</td><td class="win">R$ 57.600,00<sup><a href="#nota-calculo" aria-label="Nota: cálculo do site">*</a></sup></td></tr>
+            <tr><td>Valorização estimada (10 anos)</td><td>+15% (valor final: R$ 575.000)</td><td class="win">+30% (valor final: R$ 689.000)</td></tr>
+          </tbody>
+        </table>
+        <p class="tiny" id="nota-calculo">Valores demonstrativos da cartilha. *Cálculo deste site, a partir da tabela: (R$ 630 − R$ 150) × 120 meses = R$ 57.600. Na cartilha original esta linha não traz valor.</p>
+      </div>
+
+      <div class="chart-card reveal">
+        <h3>Custo total em 10 anos</h3>
+        <p class="tiny">Compra + gastos operacionais acumulados. Gráfico calculado por este site a partir dos valores da tabela.</p>
+        <svg id="valueChart" viewBox="0 0 420 260" role="img" aria-label="Gráfico do custo acumulado em 10 anos"></svg>
+        <div class="legend"><span class="lg trad"></span>Tradicional <span class="lg sust"></span>Sustentável</div>
+      </div>
+    </div>
+
+    <div class="value-points">
+      <article class="reveal"><span class="vp-ic"><svg class="ic"><use href="#i-home"/></svg></span><div><h4>Valorização no mercado</h4><p>Imóveis com eficiência energética e certificações ambientais valorizam mais rápido e têm maior facilidade de revenda.</p></div></article>
+      <article class="reveal"><span class="vp-ic"><svg class="ic"><use href="#i-money"/></svg></span><div><h4>Retorno sobre o investimento (ROI)</h4><p>A economia acumulada nas contas de luz e água ao longo de 5 a 10 anos compensa o investimento em tecnologias como energia solar.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MÍDIAS ============ -->
+<section class="media section section-tint" id="midias">
+  <div class="container">
+    <div class="section-head split reveal">
+      <div>
+        <p class="eyebrow">Mídias explicativas</p>
+        <h2 class="section-title">Para aprofundar</h2>
+      </div>
+      <p class="muted">Para aprofundar seu conhecimento sobre o tema, selecionamos materiais complementares essenciais.</p>
+    </div>
+
+    <div class="media-grid">
+      <article class="video-card reveal">
+        <a class="thumb" href="https://youtu.be/35_6leHUXo4" target="_blank" rel="noopener" aria-label="Assistir: Entendendo a influência do Sol na arquitetura">
+          <img src="https://i.ytimg.com/vi/35_6leHUXo4/hqdefault.jpg" alt="" loading="lazy">
+          <span class="play"><svg class="ic"><use href="#i-play"/></svg></span>
+          <span class="dur">3:18</span>
+        </a>
+        <div class="video-body">
+          <p class="meta">Orientação solar</p>
+          <h3>Entendendo a influência do Sol na arquitetura</h3>
+          <p>Neste vídeo, a arquiteta Amanda Portella explica a importância do estudo de insolação no projeto arquitetônico para garantir ambientes mais confortáveis. Utilizando uma maquete ilustrativa, ela detalha como o sol se comporta ao longo do dia no Brasil.</p>
+          <p class="ref">PORTELLA, Amanda. <i>Entendendo a influência do Sol na arquitetura</i>. Direção: Daniel Nagahata. [S. l.]: Amanda Portella Arquitetura, 29 out. 2026. 1 vídeo (3 min 18 s), son., color. Disponível em: https://youtu.be/35_6leHUXo4. Acesso em: 29 out. 2026.</p>
+          <a class="link" href="https://youtu.be/35_6leHUXo4" target="_blank" rel="noopener">Assistir no YouTube <svg class="ic"><use href="#i-arrow"/></svg></a>
+        </div>
+      </article>
+
+      <article class="video-card reveal">
+        <a class="thumb" href="https://youtu.be/coJdr4TBH18" target="_blank" rel="noopener" aria-label="Assistir: Arquitetura Bioclimática – O que é e como aplicar">
+          <img src="https://i.ytimg.com/vi/coJdr4TBH18/hqdefault.jpg" alt="" loading="lazy">
+          <span class="play"><svg class="ic"><use href="#i-play"/></svg></span>
+          <span class="dur">10:09</span>
+        </a>
+        <div class="video-body">
+          <p class="meta">Arquitetura bioclimática</p>
+          <h3>Arquitetura Bioclimática – O que é e como aplicar</h3>
+          <p>O vídeo aborda o conceito de arquitetura bioclimática e como ela pode ser aplicada na prática para tornar as construções mais sustentáveis e eficientes. A arquitetura bioclimática é definida como um conjunto de soluções que visam reduzir o impacto negativo das edificações no meio ambiente, priorizando o conforto dos usuários e a eficiência energética (0:23 – 0:59).</p>
+          <p class="ref">PROJETOU. <i>Arquitetura Bioclimática – O que é e como aplicar</i>. [S. l.]: YouTube, 29 out. 2026. 1 vídeo (10 min 9 s), son., color. Disponível em: https://youtu.be/coJdr4TBH18. Acesso em: 29 out. 2026.</p>
+          <a class="link" href="https://youtu.be/coJdr4TBH18" target="_blank" rel="noopener">Assistir no YouTube <svg class="ic"><use href="#i-arrow"/></svg></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONCLUSÃO ============ -->
+<section class="conclusion section" id="conclusao">
+  <div class="container conclusion-grid">
+    <div class="conclusion-card reveal">
+      <p class="eyebrow light">Conclusão</p>
+      <h2 class="section-title light">Uma decisão que vai<br>muito além da compra.</h2>
+      <h3>Síntese e impacto da decisão habitacional</h3>
+      <p>A escolha de um imóvel residencial vai muito além da simples aquisição de um espaço físico ou do investimento financeiro. Trata-se da definição do cenário onde a vida de uma família irá se desenvolver pelos anos seguintes. Ao integrar critérios de sustentabilidade nesse processo de decisão, transforma-se uma escolha puramente comercial em um ato de <strong>responsabilidade social, ambiental e econômica</strong>.</p>
+      <h3>Aprendizados do projeto extensionista</h3>
+      <p>A realização deste projeto extensionista pela Faculdade de Arquitetura e Urbanismo da FUMEC reforça a importância da democratização do conhecimento acadêmico. Percebeu-se que muitos dos conceitos de arquitetura sustentável e bioclimática — como orientação solar, ventilação cruzada e análise de entorno — não exigem soluções complexas ou de altíssimo custo, mas sim <strong>informação e olhar crítico na hora da escolha</strong>.</p>
+    </div>
+    <div class="conclusion-side reveal">
+      <p class="script big">Casa boa,<br>planeta feliz.</p>
+      <a href="#checklist" class="btn btn-dark">Refazer o checklist <svg class="ic"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <svg class="wave wave-top" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 40C260 0 520 70 780 40S1220 0 1440 30V80H0Z" fill="var(--green-900)"/>
+  </svg>
+  <div class="footer-inner">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="#inicio" class="brand light">
+          <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+            <path d="M8 34c0-15 9-25 26-26 0 17-10 26-24 26" fill="currentColor"/>
+            <path d="M9 33 24 18" stroke="var(--green-900)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          </svg>
+          <span><strong>Manual do Imóvel Sustentável</strong><small>Faculdade de Arquitetura e Urbanismo – FUMEC</small></span>
+        </a>
+      </div>
+      <div class="footer-col">
+        <h4>Disciplina</h4>
+        <p>Atividade Extensionista II<br>Curso: Arquitetura e Urbanismo<br>Turma: ARQ014</p>
+      </div>
+      <div class="footer-col">
+        <h4>Docente</h4>
+        <p>Prof. Dr. Mário Lúcio Pereira Júnior</p>
+        <h4>Alunos responsáveis</h4>
+        <p>Augusto, Helena, Gabriela, Luana, Marcella, Vinicius</p>
+      </div>
+      <div class="footer-col">
+        <h4>Ferramentas citadas</h4>
+        <ul>
+          <li><a href="https://earth.google.com/web/" target="_blank" rel="noopener">Google Earth</a> e <a href="https://www.google.com/maps" target="_blank" rel="noopener">Google Maps</a></li>
+          <li><a href="https://www.suncalc.org" target="_blank" rel="noopener">SunCalc</a> e <a href="https://www.peakfinder.com" target="_blank" rel="noopener">PeakFinder</a></li>
+          <li><a href="https://www.procel.gov.br" target="_blank" rel="noopener">Procel</a> e <a href="https://axia.com.br/" target="_blank" rel="noopener">Axia (Eletrobras)</a></li>
+          <li><a href="https://www.iqair.com/pt/" target="_blank" rel="noopener">IQAir</a> e <a href="https://www.windy.com/" target="_blank" rel="noopener">Windy</a></li>
+          <li><a href="https://sustcartilha.my.canva.site/c-pia-de-sustcartilha" target="_blank" rel="noopener">Cartilha original (Canva)</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-privacy" id="privacidade">
+      <h4>Privacidade</h4>
+      <p>Este site não usa cookies nem coleta dados pessoais. As marcações da check-lista, o simulador e o local escolhido ficam salvos apenas no seu navegador. Para mostrar mapa, clima, qualidade do ar e vídeos, o navegador consulta serviços externos (Esri, CARTO, Open-Meteo, Windy e YouTube), que recebem o local pesquisado e o seu endereço IP. A opção “Minha localização” só é usada se você clicar nela, e a posição é arredondada para cerca de 1 km.</p>
+    </div>
+    <div class="container footer-credit">
+      <p>Vídeo de abertura: Alef Morais, via <a href="https://www.pexels.com/video/aerial-view-of-luxury-sustainable-modern-home-39105128/" target="_blank" rel="noopener">Pexels</a> (licença de uso livre). Modelo 3D feito com <a href="https://threejs.org" target="_blank" rel="noopener">Three.js</a> (licença MIT).</p>
+    </div>
+    <div class="container footer-bottom">
+      <p>© 2026 Manual do Imóvel Sustentável · Projeto de extensão universitária · <a href="#privacidade">Privacidade</a></p>
+      <p class="script">Juntos por um futuro mais verde ♡</p>
+    </div>
+  </div>
+</footer>
+
+<a href="#topo" class="to-top" aria-label="Voltar ao topo"><svg class="ic"><use href="#i-arrow"/></svg></a>
+
+</body>
+</html>

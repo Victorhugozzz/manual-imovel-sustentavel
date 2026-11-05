@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://manual-imovel-sustentavel.pages.dev/sitemap.xml

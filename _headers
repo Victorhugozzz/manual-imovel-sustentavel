@@ -1,0 +1,21 @@
+# Cabeçalhos HTTP do site (Cloudflare Pages e Netlify leem este arquivo na publicação).
+# Se adicionar um serviço externo novo (outro mapa, outro vídeo...), inclua o domínio na CSP abaixo.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data: https://server.arcgisonline.com https://*.basemaps.cartocdn.com https://i.ytimg.com; connect-src 'self' https://geocoding-api.open-meteo.com https://api.open-meteo.com https://air-quality-api.open-meteo.com; frame-src https://embed.windy.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(self), camera=(), microphone=(), payment=(), usb=()
+  X-Content-Type-Options: nosniff
+  Cross-Origin-Opener-Policy: same-origin
+
+# Arquivos que não mudam: cache de 1 ano
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+/vendor/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Imagens e vídeo: 1 semana
+/img/*
+  Cache-Control: public, max-age=604800
+/media/*
+  Cache-Control: public, max-age=604800

@@ -1,0 +1,4 @@
+# Arquivos de ferramentas locais (não fazem parte do site)
+.impeccable/
+.claude/
+.DS_Store
