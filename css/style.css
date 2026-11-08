@@ -392,6 +392,15 @@ main:focus { outline: none; }
 .h3d-corte { background: var(--white); border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); padding: 12px 14px; }
 .h3d-corte summary { cursor: pointer; font-weight: 700; color: var(--green-700); font-size: .9rem; }
 .h3d-corte img { margin-top: 10px; width: 100%; height: auto; border-radius: 8px; }
+.planta { margin-top: 28px; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 24px; }
+.planta-title { font-size: 1.35rem; }
+.planta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+.planta-grid figure { margin: 0; }
+.planta-grid a { display: block; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; }
+.planta-grid img { display: block; width: 100%; height: auto; }
+.planta-grid figcaption { margin-top: 8px; font-size: .86rem; font-weight: 700; color: var(--green-900); }
+.planta-table td:first-child { font-weight: 700; color: var(--green-700); }
+.planta-table td:nth-child(n+3) { white-space: nowrap; }
 
 /* ---------- Ferramentas ---------- */
 .locbar {
@@ -639,6 +648,8 @@ input[type="range"] { width: 100%; accent-color: var(--green-600); }
   .daily-intro { grid-column: 1 / -1; }
   .tests-grid { grid-template-columns: repeat(2, 1fr); }
   .sun-layout, .energy-layout, .air-layout, .h3d-layout { grid-template-columns: 1fr; }
+  .planta { padding: 16px; }
+  .planta-grid { grid-template-columns: 1fr; }
   .h3d-stage { position: relative; top: 0; }
   .map-card, .windy-card { min-height: 420px; }
 }

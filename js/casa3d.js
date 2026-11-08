@@ -6,6 +6,7 @@
    Medidas tiradas do corte (img/corte-casa.webp) na escala
    1 px ≈ 3 cm; o modelo é o corte "extrudado" em profundidade,
    aberto na frente como uma maquete em corte.
+   A janelona, a fileira de janelas e o piso drenante vieram depois do corte.
    ========================================================= */
 import * as THREE from "../vendor/three/three.module.min.js";
 import { OrbitControls } from "../vendor/three/OrbitControls.js";
@@ -41,12 +42,57 @@ function stripes(color1, color2, n = 8) {
   t.colorSpace = THREE.SRGBColorSpace;
   return t;
 }
+// piso drenante visto de cima: blocos de concreto separados por juntas abertas (1 repetição = 1 m)
+function pavers() {
+  const S = 256, n = 2, cell = S / n, gap = 16;
+  const c = document.createElement("canvas");
+  c.width = c.height = S;
+  const g = c.getContext("2d");
+  g.fillStyle = "#54534c";
+  g.fillRect(0, 0, S, S);
+  const tones = ["#c9c4b6", "#bdb8a9", "#c4bfb0", "#b5b0a2"];
+  for (let i = 0; i < n * n; i++) {
+    g.fillStyle = tones[i];
+    g.fillRect((i % n) * cell + gap / 2, Math.floor(i / n) * cell + gap / 2, cell - gap, cell - gap);
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = 8; // mantém as juntas nítidas quando o chão é visto de lado
+  return t;
+}
+// pedras soltas da faixa de drenagem junto à casa
+function pebbles() {
+  const S = 128;
+  const c = document.createElement("canvas");
+  c.width = c.height = S;
+  const g = c.getContext("2d");
+  g.fillStyle = "#77776f";
+  g.fillRect(0, 0, S, S);
+  const tones = ["#a3a39a", "#8a8a82", "#5f5f58", "#b6b6ac"];
+  for (let i = 0; i < 420; i++) {
+    g.fillStyle = tones[i % 4];
+    g.beginPath();
+    g.arc(Math.random() * S, Math.random() * S, 1.5 + Math.random() * 3, 0, Math.PI * 2);
+    g.fill();
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
 function makeMaterials() {
   const roofTex = stripes("#8d949a", "#6f767c");
   roofTex.repeat.set(1, 30);
   const panelTex = stripes("#1e3d5c", "#2b5277", 6);
   panelTex.repeat.set(4, 1);
+  const paverTex = pavers();
+  paverTex.repeat.set(18, 12); // o piso tem 18 m × 12 m
+  const pebbleTex = pebbles();
+  pebbleTex.repeat.set(12, 10);
   return {
+    paver: new THREE.MeshStandardMaterial({ map: paverTex, color: "#ffffff", roughness: 0.95 }),
+    pebble: new THREE.MeshStandardMaterial({ map: pebbleTex, color: "#ffffff", roughness: 1 }),
     wall: new THREE.MeshStandardMaterial({ color: "#f3efe6", roughness: 0.9 }),
     wallIn: new THREE.MeshStandardMaterial({ color: "#e9e4d8", roughness: 0.95 }),
     slab: new THREE.MeshStandardMaterial({ color: "#cfcac0", roughness: 0.85 }),
@@ -63,6 +109,7 @@ function makeMaterials() {
     leaf: new THREE.MeshStandardMaterial({ color: "#4e8a4a", roughness: 0.9, flatShading: true }),
     leaf2: new THREE.MeshStandardMaterial({ color: "#3f7a3d", roughness: 0.9, flatShading: true }),
     lamp: new THREE.MeshStandardMaterial({ color: "#222222", roughness: 0.5 }),
+    tank: new THREE.MeshStandardMaterial({ color: "#7f9aa3", roughness: 0.6 }),
   };
 }
 
@@ -94,8 +141,14 @@ function buildHouse(M) {
   const { wallL, wallR, eaveL, ridge, roofRtop, eaveR, slabY, slabL, slabR } = P;
   const t = 0.2; // espessura das paredes
 
-  // terreno: brita sob a casa e grama ao redor
-  box(-9, 9, -0.35, -0.15, -D / 2 - 1.5, D / 2 + 1.5, M.gravel);
+  // terreno: piso drenante em volta da casa (só o topo tem blocos; as laterais mostram a brita da base)
+  const groundY = -0.15;
+  box(-9, 9, -0.35, groundY, -D / 2 - 1.5, D / 2 + 1.5, [M.gravel, M.gravel, M.paver, M.gravel, M.gravel, M.gravel]);
+
+  // faixa de brita de 60 cm rente à casa: recebe a água que escorre e leva para o solo
+  // (é um retângulo só; o miolo fica escondido sob o piso térreo)
+  box(-6.13, 6.13, groundY, groundY + 0.015, BACK - 0.8, D / 2 + 0.6, [M.gravel, M.gravel, M.pebble, M.gravel, M.gravel, M.gravel], false);
+
   const grass = new THREE.Mesh(new THREE.CircleGeometry(26, 48), M.grass);
   grass.rotation.x = -Math.PI / 2;
   grass.position.y = -0.36;
@@ -109,12 +162,10 @@ function buildHouse(M) {
   box(stairX1, slabR, slabY - 0.2, slabY, BACK, D / 2, M.slab);
   box(stairX0, stairX1, slabY - 0.2, slabY, stairZ1, D / 2, M.slab);
 
-  // paredes laterais até encontrar cada telhado
+  // altura de cada lateral até encontrar o telhado (as paredes são montadas mais abaixo, com as aberturas)
   const hL = roofY(eaveL, ridge, wallL), hR = roofY(roofRtop, eaveR, wallR);
-  box(wallL - t, wallL, 0, hL, BACK, D / 2, M.wall);
-  box(wallR, wallR + t, 0, hR, BACK, D / 2, M.wall);
 
-  // parede do fundo seguindo o perfil do corte, com a porta central
+  // parede do fundo seguindo o perfil do corte: fechada de cima a baixo
   const shape = new THREE.Shape();
   shape.moveTo(wallL, 0);
   shape.lineTo(wallL, hL);
@@ -124,13 +175,12 @@ function buildHouse(M) {
   shape.lineTo(wallR, hR);
   shape.lineTo(wallR, 0);
   shape.lineTo(wallL, 0);
-  const door = new THREE.Path();
-  door.moveTo(-0.9, 0.05); door.lineTo(0.2, 0.05); door.lineTo(0.2, 2.35); door.lineTo(-0.9, 2.35); door.lineTo(-0.9, 0.05);
-  shape.holes.push(door);
   const back = new THREE.Mesh(new THREE.ExtrudeGeometry(shape, { depth: t, bevelEnabled: false }), M.wallIn);
   back.position.z = BACK - t;
   add(back);
-  box(-0.9, 0.2, 0.05, 2.35, BACK - t / 2 - 0.02, BACK - t / 2 + 0.02, M.wood); // folha da porta
+  box(wallL - t, wallR + t, groundY, 0, BACK - t, BACK, M.wallIn); // base da parede até o chão
+  box(wallL - t, wallL, groundY, hL, BACK - t, BACK, M.wall);      // cantos com as laterais
+  box(wallR, wallR + t, groundY, hR, BACK - t, BACK, M.wall);
 
   // telhados: esquerdo (sobe até o lanternim) e direito (com placas solares)
   const roofZ0 = BACK - 0.6, roofZ1 = D / 2 + 0.6;
@@ -163,16 +213,105 @@ function buildHouse(M) {
   }
   house.add(panels);
 
-  // janelas (vidro + caixilho) nas paredes laterais, como no corte
-  const windowOn = (x, y0, y1, z0, z1) => {
-    box(x - 0.12, x + 0.12, y0, y1, z0, z1, M.frame);
-    box(x - 0.14, x + 0.14, y0 + 0.06, y1 - 0.06, z0 + 0.06, z1 - 0.06, M.glass, false);
+  // janela: caixilho em grade (colunas × linhas) mais o vidro, pendurados em torno do topo.
+  // `out` é o lado de fora (−1 esquerda, +1 direita); com `ang` > 0 a folha abre como maxim-ar.
+  const bar = 0.05, tilt = 20 * DEG;
+  const sash = (x, out, y0, y1, z0, z1, cols, rows, ang = tilt) => {
+    const w = z1 - z0, h = y1 - y0;
+    const grid = new THREE.Shape();
+    grid.moveTo(-w / 2, -h); grid.lineTo(w / 2, -h); grid.lineTo(w / 2, 0); grid.lineTo(-w / 2, 0); grid.lineTo(-w / 2, -h);
+    const cw = (w - bar) / cols, ch = (h - bar) / rows;
+    for (let c = 0; c < cols; c++) {
+      for (let r = 0; r < rows; r++) {
+        const a = -w / 2 + bar + c * cw, b = a + cw - bar, d = -h + bar + r * ch, e = d + ch - bar;
+        const hole = new THREE.Path();
+        hole.moveTo(a, d); hole.lineTo(a, e); hole.lineTo(b, e); hole.lineTo(b, d); hole.lineTo(a, d);
+        grid.holes.push(hole);
+      }
+    }
+    const frame = new THREE.ExtrudeGeometry(grid, { depth: 0.05, bevelEnabled: false }).translate(0, 0, -0.025);
+    const pane = new THREE.BoxGeometry(w - bar, h - bar, 0.012).translate(0, -h / 2, 0);
+    const g = new THREE.Group();
+    g.position.set(x, y1, (z0 + z1) / 2);
+    g.rotation.set(0, Math.PI / 2, 0);
+    g.rotateX(-out * ang);
+    const f = new THREE.Mesh(frame, M.frame);
+    f.castShadow = true;
+    g.add(f, new THREE.Mesh(pane, M.glass));
+    house.add(g);
   };
-  windowOn(wallL - t / 2, 3.75, 5.2, -1.4, 0.2);         // janela do pavimento superior (esquerda)
-  windowOn(wallL - t / 2, 0.9, 2.3, 1.2, 3.0);           // janela do térreo (esquerda)
-  for (let i = 0; i < 3; i++) windowOn(wallR + t / 2, 3.75, 4.35, -2.2 + i * 0.75, -1.6 + i * 0.75); // janelas altas (direita)
-  box(wallR - 0.02, wallR + t + 0.02, 0.05, 2.35, 1.3, 2.3, M.wood);    // porta lateral (direita)
-  windowOn(wallR + t / 2, 1.5, 2.4, -0.6, 0.6);          // janela do térreo (direita)
+  // batentes de uma abertura, na espessura da parede
+  const jambs = (x0, y0, y1, z0, z1) => {
+    const f = 0.05;
+    box(x0, x0 + t, y0, y0 + f, z0, z1, M.frame);
+    box(x0, x0 + t, y1 - f, y1, z0, z1, M.frame);
+    box(x0, x0 + t, y0 + f, y1 - f, z0, z0 + f, M.frame);
+    box(x0, x0 + t, y0 + f, y1 - f, z1 - f, z1, M.frame);
+  };
+  // parede lateral maciça com os recortes [z0, z1, y0, y1]
+  const sideWall = (x0, top, holes) => {
+    const s = new THREE.Shape();
+    s.moveTo(BACK, groundY); s.lineTo(D / 2, groundY); s.lineTo(D / 2, top); s.lineTo(BACK, top); s.lineTo(BACK, groundY);
+    for (const [z0, z1, y0, y1] of holes) {
+      const h = new THREE.Path();
+      h.moveTo(z0, y0); h.lineTo(z0, y1); h.lineTo(z1, y1); h.lineTo(z1, y0); h.lineTo(z0, y0);
+      s.holes.push(h);
+    }
+    const m = new THREE.Mesh(new THREE.ExtrudeGeometry(s, { depth: t, bevelEnabled: false }), M.wall);
+    m.rotation.y = -Math.PI / 2;
+    m.position.x = x0 + t;
+    add(m);
+  };
+
+  // esquerda, em cima: a janelona, de um canto da parede ao outro.
+  // Um vidro só na metade de baixo e, com a travessa do corte, a metade de cima abre para o ar quente sair.
+  const big = { z0: BACK + 0.12, z1: D / 2 - 0.12, y0: 3.8, y1: 5.4, mid: 4.6, n: 4 };
+  const leafW = (big.z1 - big.z0 - 0.1) / big.n;
+  // esquerda, embaixo: porta de vidro para a varanda, com o ripado à frente (como no corte)
+  const glassDoor = { z0: 1.5, z1: 2.7, y1: 2.35 };
+  sideWall(wallL - t, hL, [[big.z0, big.z1, big.y0, big.y1], [glassDoor.z0, glassDoor.z1, 0, glassDoor.y1]]);
+  jambs(wallL - t, big.y0, big.y1, big.z0, big.z1);
+  for (let i = 0; i < big.n; i++) {
+    const z = big.z0 + 0.05 + i * leafW;
+    sash(wallL - t / 2, -1, big.y0 + 0.05, big.mid, z, z + leafW, 1, 1, 0);
+    sash(wallL - t / 2, -1, big.mid, big.y1 - 0.05, z, z + leafW, 1, 1);
+  }
+  jambs(wallL - t, 0, glassDoor.y1, glassDoor.z0, glassDoor.z1);
+  sash(wallL - t / 2, -1, 0.05, glassDoor.y1 - 0.05, glassDoor.z0 + 0.05, glassDoor.z1 - 0.05, 2, 1, 0);
+
+  // direita, embaixo: porta colada no fundo e a fileira de janelas de duas folhas até a frente
+  const door = { z0: -4.1, z1: -3.1, y1: 2.35 };
+  const row = { z0: -2.6, z1: 4.2, y0: 1.2, y1: 2.3, n: 5, gap: 0.25 };
+  const rowW = (row.z1 - row.z0 - row.gap * (row.n - 1)) / row.n;
+  const rowZ = Array.from({ length: row.n }, (_, i) => row.z0 + i * (rowW + row.gap));
+  // direita, em cima: as três janelas altas do corte
+  const high = { w: 1.5, y0: 3.85, y1: 4.55, at: [-3, 0, 3] };
+  sideWall(wallR, hR, [
+    [door.z0, door.z1, 0, door.y1],
+    ...rowZ.map((z) => [z, z + rowW, row.y0, row.y1]),
+    ...high.at.map((z) => [z - high.w / 2, z + high.w / 2, high.y0, high.y1]),
+  ]);
+  jambs(wallR, 0, door.y1, door.z0, door.z1);
+  box(wallR + 0.06, wallR + t - 0.06, 0.05, door.y1 - 0.05, door.z0 + 0.05, door.z1 - 0.05, M.wood);
+  for (const z of rowZ) {
+    jambs(wallR, row.y0, row.y1, z, z + rowW);
+    sash(wallR + t / 2, 1, row.y0 + 0.05, row.y1 - 0.05, z + 0.05, z + rowW - 0.05, 2, 1);
+  }
+  for (const z of high.at) {
+    const z0 = z - high.w / 2, z1 = z + high.w / 2;
+    jambs(wallR, high.y0, high.y1, z0, z1);
+    sash(wallR + t / 2, 1, high.y0 + 0.05, high.y1 - 0.05, z0 + 0.05, z1 - 0.05, 2, 2);
+  }
+
+  // calhas nos beirais: a da esquerda desce para a cisterna, a da direita para a faixa de brita
+  box(eaveL[0] - 0.2, eaveL[0] + 0.02, eaveL[1] - 0.12, eaveL[1] + 0.02, roofZ0, roofZ1, M.frame);
+  box(eaveR[0] - 0.02, eaveR[0] + 0.2, eaveR[1] - 0.12, eaveR[1] + 0.02, roofZ0, roofZ1, M.frame);
+  box(-6.36, -6.26, 1.2, eaveL[1] - 0.1, -5.0, -4.9, M.frame);
+  box(6.1, 6.2, groundY, eaveR[1] - 0.1, -5.0, -4.9, M.frame);
+  const tank = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.6, 1.5, 24), M.tank);
+  tank.position.set(-6.7, groundY + 0.75, -5.25);
+  tank.castShadow = tank.receiveShadow = true;
+  house.add(tank);
 
   // escada: do térreo (direita) até a laje (esquerda), junto ao fundo
   const steps = 15;
@@ -185,7 +324,7 @@ function buildHouse(M) {
 
   // marquise esquerda com pilares e ripado de madeira junto à parede
   for (const z of [BACK + 0.3, 0, D / 2 - 0.3]) box(slabL + 0.05, slabL + 0.25, 0, slabY - 0.2, z - 0.1, z + 0.1, M.frame);
-  for (let z = -1.2; z <= 1.2; z += 0.2) box(-6.25, -6.17, 0.25, 2.75, z - 0.035, z + 0.035, M.wood);
+  for (let z = -1.2; z <= 3.2; z += 0.2) box(-6.25, -6.17, 0.25, 2.75, z - 0.035, z + 0.035, M.wood);
 
   // pendentes de iluminação, como no desenho
   for (const [x, y] of [[-1.6, 6.2], [3.0, 5.6]]) {
@@ -231,10 +370,11 @@ function buildHouse(M) {
 const SPOTS = {
   paineis:   { at: [3.0, 6.6, 0], cam: [14, 13, 10] },
   lanternim: { at: [0.55, 7.6, 2], cam: [6, 9, 15] },
-  chuva:     { at: [-6.1, 5.6, 2], cam: [-15, 8, 12] },
+  chuva:     { at: [-6.7, 1.7, -5.25], cam: [-16, 7, -12] },
   arvores:   { at: [-11, 4.5, 1.5], cam: [-20, 7, 14] },
   beirais:   { at: [7.0, 3.1, 2], cam: [17, 5, 12] },
-  ventilacao:{ at: [-5.4, 4.4, -0.6], cam: [2, 5, 16] },
+  ventilacao:{ at: [-5.6, 4.6, 0], cam: [-14, 6.5, 14] },
+  piso:      { at: [6.6, -0.1, 3.4], cam: [13.5, 6.5, 12.5] },
 };
 
 /* ---------- Sol (Belo Horizonte, lat. −19,9°) ---------- */
@@ -270,11 +410,13 @@ export function init({ container, markers, list, hourInput, hourOut, seasonBtns,
   controls.maxPolarAngle = 88 * DEG;
   controls.target.set(0, 3.5, 0);
 
-  const sky = new THREE.HemisphereLight("#f2f6ff", "#6f8a5a", 0.9);
+  const sky = new THREE.HemisphereLight("#f2f6ff", "#c2bbab", 0.9);
   scene.add(sky);
+  const fill = new THREE.AmbientLight("#ffffff", 0.55); // clareia o interior, que fica sem sol direto
+  scene.add(fill);
   const sun = new THREE.DirectionalLight("#fff4dc", 2.4);
   sun.castShadow = true;
-  sun.shadow.mapSize.set(1024, 1024);
+  sun.shadow.mapSize.set(2048, 2048);
   Object.assign(sun.shadow.camera, { left: -18, right: 18, top: 18, bottom: -18, near: 1, far: 80 });
   sun.shadow.bias = -0.0005;
   scene.add(sun, sun.target);
@@ -293,6 +435,7 @@ export function init({ container, markers, list, hourInput, hourOut, seasonBtns,
     sun.position.copy(v).multiplyScalar(40).add(sun.target.position);
     sun.intensity = day ? 0.6 + 2.2 * Math.min(v.y * 2, 1) : 0;
     sky.intensity = day ? 0.9 : 0.35;
+    fill.intensity = day ? 0.55 : 0.12;
     sunDisc.visible = day;
     sunDisc.position.copy(v).multiplyScalar(60);
     const hh = Math.floor(hour), mm = Math.round((hour - hh) * 60);

@@ -478,7 +478,7 @@
 
     <div class="h3d-layout">
       <div class="h3d-stage">
-        <div class="h3d-canvas" id="h3dCanvas" role="img" aria-label="Modelo 3D em corte de uma casa de dois pavimentos: telhados inclinados com lanternim entre eles, placas solares, marquises, escada interna e árvores dos dois lados."></div>
+        <div class="h3d-canvas" id="h3dCanvas" role="img" aria-label="Modelo 3D em corte de uma casa de dois pavimentos: telhados inclinados com lanternim entre eles, placas solares, marquises, escada interna, uma janela grande de ponta a ponta no alto da parede esquerda, uma fileira de janelas no térreo da parede direita, cisterna, piso drenante em volta da casa e árvores dos dois lados."></div>
         <div class="h3d-markers" id="h3dMarkers" aria-hidden="true"></div>
         <p class="h3d-status" id="h3dStatus" role="status">Carregando o modelo 3D…</p>
       </div>
@@ -508,7 +508,8 @@
           <li><button type="button" data-spot="chuva" aria-pressed="false"><b>Captação e reuso de água</b><span>Captação de água da chuva para regar plantas, lavar áreas externas e usar em descargas.</span></button></li>
           <li><button type="button" data-spot="arvores" aria-pressed="false"><b>Paisagismo bioclimático</b><span>Uso de árvores e plantas para criar sombreamento natural e amenizar a temperatura do entorno.</span></button></li>
           <li><button type="button" data-spot="beirais" aria-pressed="false"><b>Beirais e marquises</b><span>Avaliar a possibilidade de usar beirais, toldos ou brises para controlar o sol.</span></button></li>
-          <li><button type="button" data-spot="ventilacao" aria-pressed="false"><b>Ventilação cruzada</b><span>Ventilação cruzada, com aberturas em lados diferentes quando possível.</span></button></li>
+          <li><button type="button" data-spot="ventilacao" aria-pressed="false"><b>Ventilação cruzada</b><span>Ventilação cruzada, com aberturas em lados diferentes: o ar entra pela fileira de janelas embaixo e sai pela janelona no alto, do outro lado.</span></button></li>
+          <li><button type="button" data-spot="piso" aria-pressed="false"><b>Piso drenante</b><span>Piso permeável em volta da casa: a água da chuva passa pelas juntas e infiltra no solo, sem empoçar.</span></button></li>
         </ol>
 
         <details class="h3d-corte">
@@ -516,6 +517,37 @@
           <img src="img/corte-casa.webp" width="735" height="652" loading="lazy" alt="Corte esquemático em preto e branco: casa de dois pavimentos com dois telhados inclinados e lanternim, placas solares, escada, marquises, árvores, chuva à esquerda e sol à direita.">
         </details>
       </div>
+    </div>
+
+    <div class="planta reveal">
+      <h3 class="planta-title">Planta baixa</h3>
+      <p class="muted max">Proposta de distribuição dos ambientes, com as medidas e as aberturas do modelo 3D. O térreo é aberto de propósito: o ar entra pela fileira de janelas, atravessa a casa e sai pela janelona e pelo lanternim, no alto.</p>
+
+      <div class="planta-grid">
+        <figure>
+          <a href="img/planta-terreo.svg" target="_blank" rel="noopener" aria-label="Abrir a planta do térreo em tamanho grande"><img src="img/planta-terreo.svg" width="1197" height="936" loading="lazy" alt="Planta do térreo: sala de estar, cozinha e jantar integrados, hall de entrada, lavabo e despensa. Porta e fileira de cinco janelas na parede direita, porta de vidro para a varanda na esquerda, piso drenante e faixa de brita em volta da casa e cisterna no canto do fundo."></a>
+          <figcaption>Térreo: 104 m² construídos</figcaption>
+        </figure>
+        <figure>
+          <a href="img/planta-superior.svg" target="_blank" rel="noopener" aria-label="Abrir a planta do pavimento superior em tamanho grande"><img src="img/planta-superior.svg" width="1197" height="936" loading="lazy" alt="Planta do pavimento superior: dois quartos com a janelona na parede esquerda, estudo central sob o lanternim, suíte com closet e banheiro, e banheiro social com as três janelas altas na parede direita."></a>
+          <figcaption>Pavimento superior: 104 m² construídos</figcaption>
+        </figure>
+      </div>
+
+      <div class="table-wrap">
+        <table class="energy-table planta-table">
+          <caption class="sr-only">Quadro de esquadrias da casa</caption>
+          <thead><tr><th scope="col">Código</th><th scope="col">Esquadria</th><th scope="col">Largura × altura</th><th scope="col">Peitoril</th><th scope="col">Qtd.</th></tr></thead>
+          <tbody>
+            <tr><td>J1</td><td>Janelona, com a metade de cima basculante</td><td>8,76 × 1,60 m</td><td>0,80 m</td><td>1</td></tr>
+            <tr><td>J2</td><td>Fileira do térreo, maxim-ar de duas folhas</td><td>1,16 × 1,10 m</td><td>1,20 m</td><td>5</td></tr>
+            <tr><td>J3</td><td>Janela alta, maxim-ar</td><td>1,50 × 0,70 m</td><td>0,85 m</td><td>3</td></tr>
+            <tr><td>P1</td><td>Porta de entrada</td><td>1,00 × 2,35 m</td><td>–</td><td>1</td></tr>
+            <tr><td>P2</td><td>Porta de vidro de correr</td><td>1,20 × 2,35 m</td><td>–</td><td>1</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tiny">Estudo para a cartilha, não é projeto executivo. O lavabo não tem janela e precisa de exaustão. A linha A indica onde passa o corte.</p>
     </div>
   </div>
 </section>
